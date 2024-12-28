@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>30 Days of Animation</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #f0f0f0;
+            padding: 2rem;
+        }
+
+        header {
+            max-width: 1200px;
+            margin: 0 auto 2rem;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .grid-item {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+            aspect-ratio: 1;
+            cursor: pointer;
+        }
+
+        .animation-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .day-number {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+
+            
+        }
+
+        .box {
+            width: 100px;
+            height: 100px;
+            background: #6b46c1;
+            border-radius: 8px;
+        }
+       
+        .ball {
+            width: 100px;
+            height: 100px;
+            background: #6b46c1;
+            border-radius: 50%;
+        }
+       
+   
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Sam's Animation Practice</h1>
+        <p>A collection of web animation (GSAP) experiments</p>
+        <p>Animated on mouseenter</p>
+    </header>
+
+    <main class="grid-container">
+        <div class="grid-item" id="day1">
+            <div class="animation-container">
+                <span class="day-number">Day 1 - Left to Right</span>
+                <div class="box day-one-box"></div>
+            </div>
+        </div>
+        <div class="grid-item" id="day2">
+            <div class="animation-container">
+                <span class="day-number">Day 2 - Slide Down using .fromTo</span>
+                <div class="box day-two-box"></div>
+            </div>
+        </div>
+        <div class="grid-item" id="day3">
+            <div class="animation-container">
+                <span class="day-number">Day 3 - Sequence animation-container</span>
+                <div class="box day-three-box "></div>
+            </div>
+        </div>
+        <div class="grid-item" id="day4">
+            <div class="animation-container">
+                <span class="day-number">Day 4 - Ball Bounce</span>
+                <div class="ball day-four-ball "></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // day one
+        const day1Box = document.querySelector('.day-one-box');
+        const day1Container = document.querySelector('#day1')
+
+        day1Container.addEventListener('mouseenter', ()=> {
+            gsap.to(day1Box, {
+                x: 100,
+                duration: 1,
+                ease: 'power2.inOut'
+            })
+        })
+
+        day1Container.addEventListener('mouseleave', () => {
+    gsap.to(day1Box, {
+        x: 0,
+        duration: 1,
+        ease: "power2.inOut"
+    });
+});
+
+//  day two
+const day2Box = document.querySelector('.day-two-box');
+const day2Container = document.querySelector('#day2')
+const day2tl = gsap.timeline({paused: true})
+
+day2tl.fromTo(day2Box, 
+    {y:0},
+    {y: 100, duration: 1, ease:"power2.inOut"}
+
+);
+
+day2Container.addEventListener('mouseenter', () => day2tl.play());
+day2Container.addEventListener('mouseleave', () => day2tl.reverse());
+
+
+// day three
+
+const day3Box = document.querySelector('.day-three-box');
+const day3Container = document.querySelector('#day3')
+const day3tl = gsap.timeline({paused: true})
+
+day3tl.to(day3Box, {
+    duration: 1,
+    scale: 2,
+})
+.to(day3Box, {duration: 1, rotation: 360})
+.to(day3Box, {duration: 1, opacity: 0})
+
+day3Container.addEventListener('mouseenter', () => day3tl.play());
+day3Container.addEventListener('mouseleave', () => day3tl.reverse());
+
+//  day four
+const day4Box = document.querySelector('.day-four-ball');
+const day4Container = document.querySelector('#day4')
+const day4tl = gsap.timeline({paused: true})
+
+day4tl.fromTo(day4Box, 
+    {y:-100},
+    {y: 100, duration: 1, ease:"bounce"}
+
+);
+
+day4Container.addEventListener('mouseenter', () => day4tl.play());
+day4Container.addEventListener('mouseleave', () => day4tl.reverse());
+     
+    </script>
+</body>
+</html>
