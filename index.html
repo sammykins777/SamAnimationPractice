@@ -69,6 +69,13 @@
             
         }
 
+        .column {
+            display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+        }
+
         .box {
             width: 100px;
             height: 100px;
@@ -82,7 +89,14 @@
             background: #6b46c1;
             border-radius: 50%;
         }
+        .styled-button {
+            text-transform: uppercase;
+            padding: 5px;
+        }
        
+        .button-group {
+            margin-top: 5px;    
+        }
    
     </style>
 </head>
@@ -120,11 +134,25 @@
         </div>
         <div class="grid-item" id="day5">
             <div class="animation-container">
-                <span class="day-number">Day 5 - stagger</span>
+                <span class="day-number">Day 5 - Stagger</span>
                 <div class="ball day-five-ball "></div>
                 <div class="ball day-five-ball "></div>
                 <div class="ball day-five-ball "></div>
                 <div class="ball day-five-ball "></div>
+            </div>
+        </div>
+        <div class="grid-item" id="day6">
+            <div class="animation-container">
+                <span class="day-number">Day 6 - Play, Pause, Reverse</span>
+                <div class="column">                    
+                    <div class="box day-six-box "></div>
+                    <div class="button-group">
+                    <button class="styled-button" id="play">play</button>
+                    <button class="styled-button" id="pause">pause</button>
+                    <button class="styled-button" id="reverse">reverse</button>
+                </div>
+                </div>               
+               
             </div>
         </div>
     </main>
@@ -194,6 +222,7 @@ day4tl.fromTo(day4Box,
 
 day4Container.addEventListener('mouseenter', () => day4tl.play());
 day4Container.addEventListener('mouseleave', () => day4tl.reverse());
+
 //  day FIVE
 const day5Ball = document.querySelectorAll('.day-five-ball');
 const day5Container = document.querySelector('#day5')
@@ -207,6 +236,24 @@ day5tl.fromTo(day5Ball,
 
 day5Container.addEventListener('mouseenter', () => day5tl.play());
 day5Container.addEventListener('mouseleave', () => day5tl.reverse());
+
+//  day six
+const day6Box = document.querySelector('.day-six-box');
+const day6Container = document.querySelector('#day6')
+const day6tl = gsap.timeline({paused: true})
+const play = document.querySelector('#play')
+const pause = document.querySelector('#pause')
+const reverse = document.querySelector('#reverse')
+
+day6tl.fromTo(day6Box,
+    {x:-100, },
+    {x: 100,  duration: 2,  ease: 'power1.inOut'}
+
+);
+
+play.addEventListener('click', () => day6tl.play());
+pause.addEventListener('click', () => day6tl.pause());
+reverse.addEventListener('click', () => day6tl.reverse());
 
 
      
