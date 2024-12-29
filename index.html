@@ -118,6 +118,15 @@
                 <div class="ball day-four-ball "></div>
             </div>
         </div>
+        <div class="grid-item" id="day5">
+            <div class="animation-container">
+                <span class="day-number">Day 5 - stagger</span>
+                <div class="ball day-five-ball "></div>
+                <div class="ball day-five-ball "></div>
+                <div class="ball day-five-ball "></div>
+                <div class="ball day-five-ball "></div>
+            </div>
+        </div>
     </main>
 
     <script>
@@ -185,6 +194,21 @@ day4tl.fromTo(day4Box,
 
 day4Container.addEventListener('mouseenter', () => day4tl.play());
 day4Container.addEventListener('mouseleave', () => day4tl.reverse());
+//  day FIVE
+const day5Ball = document.querySelectorAll('.day-five-ball');
+const day5Container = document.querySelector('#day5')
+const day5tl = gsap.timeline({paused: true})
+
+day5tl.fromTo(day5Ball, 
+    {opacity:.5, scale: .5},
+    {opacity: 1, scale: 1, duration: 1, stagger:.1, ease: 'power1.inOut'}
+
+);
+
+day5Container.addEventListener('mouseenter', () => day5tl.play());
+day5Container.addEventListener('mouseleave', () => day5tl.reverse());
+
+
      
     </script>
 </body>
