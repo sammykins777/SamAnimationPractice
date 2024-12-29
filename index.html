@@ -155,6 +155,22 @@
                
             </div>
         </div>
+        <div class="grid-item" id="day7">
+            <div class="animation-container">
+                <span class="day-number">Day 7 - Button Hover</span>                        
+                <button class="styled-button" id="day-seven-hover">test</button>           
+                       
+               
+            </div>
+        </div>
+        <div class="grid-item" id="day8">
+            <div class="animation-container">
+                <span class="day-number">Day 8 - Text Animation</span>                        
+                <div id="my-text">Text Animation</div>   
+                       
+               
+            </div>
+        </div>
     </main>
 
     <script>
@@ -255,7 +271,66 @@ play.addEventListener('click', () => day6tl.play());
 pause.addEventListener('click', () => day6tl.pause());
 reverse.addEventListener('click', () => day6tl.reverse());
 
+//  day seven
+const day7Button = document.querySelector('#day-seven-hover');
+const day7Container = document.querySelector('#day7')
+const day7tl = gsap.timeline({paused: true})
 
+day7tl.fromTo(day7Button, 
+    {scale: 1},
+    {scale: 2, backgroundColor:'#6b46c1', color: 'white', duration: .3, ease: "power2.inOut" }
+
+);
+
+day7Button.addEventListener('mouseenter', () => day7tl.play());
+day7Button.addEventListener('mouseleave', () => day7tl.reverse());
+
+// day eight
+
+
+const day8Container = document.querySelector('#day8')
+const day8tl = gsap.timeline({paused: true})
+
+function splitText(selector) {
+    const element = document.querySelector(selector);
+    if (!element) return;
+    
+    // Get the text content
+    const text = element.textContent;
+    // Clear the element
+    element.textContent = '';
+    
+    // Create spans for each character, including spaces
+    const chars = [...text].map(char => {
+        const span = document.createElement('span');
+        if (char === ' ') {
+            span.innerHTML = '&nbsp;'; // Use non-breaking space for spaces
+        } else {
+            span.textContent = char;
+        }
+        span.style.display = 'inline-block';
+        return span;
+    });
+    
+    // Add spans back to element
+    chars.forEach(span => element.appendChild(span));
+    
+    return chars;
+}
+
+const chars = splitText('#my-text');
+
+// Animate each character
+day8tl.from(chars, {
+    y: 100,                    // Start 100px below
+    opacity: 0,                // Start transparent
+    duration: 0.5,             // Animation duration
+    stagger: 0.05,             // Delay between each character  
+    ease: "back.out(1.7)"      // Bouncy easing
+});
+
+day8Container.addEventListener('mouseenter', () => day8tl.reverse());
+day8Container.addEventListener('mouseleave', () => day8tl.play());
      
     </script>
 </body>
