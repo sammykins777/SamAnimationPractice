@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>30 Days of Animation</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/MotionPathPlugin.min.js"></script>
+    
+  
     <style>
         * {
             margin: 0;
@@ -97,7 +101,20 @@
         .button-group {
             margin-top: 5px;    
         }
+
+        .loading-line {
+            height: 50px;
+            width: 20px;
+            background: #6b46c1;
+            border-radius: 10px;
+            margin: 5px;
+        }
    
+        .stroke-circle {
+      stroke: #6b46c1;
+      stroke-width: 2;
+      fill: none;
+    }
     </style>
 </head>
 <body>
@@ -166,8 +183,55 @@
         <div class="grid-item" id="day8">
             <div class="animation-container">
                 <span class="day-number">Day 8 - Text Animation</span>                        
-                <div id="my-text">Text Animation</div>   
-                       
+                <div id="my-text">Text Animation</div>                         
+               
+            </div>
+        </div>
+        <div class="grid-item" id="day9">
+            <div class="animation-container">
+                <span class="day-number">Day 9 - Motion Path</span> 
+                <div class="container">
+                    <svg width="200" height="200" viewBox="0 0 100 100">
+                      <!-- Path that will be followed (made transparent) -->
+                      <path id="circlePath" 
+                            d="M 50 10 A 40 40 0 1 0 50 90 A 40 40 0 1 0 50 10" 
+                            fill="none" 
+                            stroke="lightgray" 
+                            stroke-width="1"/>
+                      
+                      <!-- Circle that will move -->
+                      <circle id="movingCircle" 
+                              cx="50" 
+                              cy="10" 
+                              r="5" 
+                              fill="#6b46c1"/>
+                    </svg>
+                  </div>                      
+                                       
+               
+            </div>
+        </div>
+
+        <div class="grid-item" id="day10">
+            <div class="animation-container">
+                <span class="day-number">Day 10 - Simple Loader</span>                        
+                <div class="loading-line"></div>                         
+                <div class="loading-line"></div>                         
+                <div class="loading-line"></div>                         
+                <div class="loading-line"></div>                         
+                <div class="loading-line"></div>                         
+               
+            </div>
+
+         
+        </div>
+
+        <div class="grid-item" id="day11">
+            <div class="animation-container">
+                <span class="day-number">Day 11 - Stroke Animation</span>                        
+                <svg width="200" height="200" viewBox="0 0 100 100">
+                    <circle class="stroke-circle" cx="50" cy="50" r="30"/>
+                  </svg>         
                
             </div>
         </div>
@@ -331,7 +395,52 @@ day8tl.from(chars, {
 
 day8Container.addEventListener('mouseenter', () => day8tl.reverse());
 day8Container.addEventListener('mouseleave', () => day8tl.play());
-     
+
+//  day nine
+gsap.registerPlugin(MotionPathPlugin);
+const day9Container = document.querySelector('#day9')
+const day9tl = gsap.timeline({paused: true})
+
+day9tl.to("#movingCircle", {
+      duration: 5,
+      repeat: -1,
+      ease: "linear",
+      motionPath: {
+        path: "#circlePath",
+        align: "#circlePath",
+        autoRotate: true,
+        alignOrigin: [0.5, 0.5]
+      }
+    });
+
+    day9Container.addEventListener('mouseenter', () => day9tl.play());
+    day9Container.addEventListener('mouseleave', () => day9tl.pause());
+    //   day ten
+    const day10Line = document.querySelectorAll('.loading-line');
+const day10Container = document.querySelector('#day10')
+
+
+gsap.fromTo(day10Line, 
+    {opacity: 0, scale: .5,  },
+    {opacity: 1, scale: 1,  duration: 1, stagger:.3, transformOrigin: "center center", ease: 'power2.inOut', repeat: -1, yoyo: true}
+);
+    //   day eleven
+    const circle = document.querySelector('.stroke-circle');
+    const length = circle.getTotalLength();
+    
+    gsap.set(circle, {
+      strokeDasharray: length,
+      strokeDashoffset: length
+    });
+
+    gsap.to(circle, {
+      strokeDashoffset: 0,
+      duration: 2,
+      ease: "power1.inOut",
+      repeat: -1,
+      yoyo: true
+    });
+
     </script>
 </body>
 </html>
