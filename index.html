@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>30 Days of Animation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/MotionPathPlugin.min.js"></script>
@@ -115,13 +118,55 @@
       stroke-width: 2;
       fill: none;
     }
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+    }
+
+    .logo-symbol {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(45deg, #6b46c1, #553098);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 24px;
+    }
+
+    .logo-text {
+      font-size: 24px;
+      font-weight: bold;
+      color: #2c3e50;
+      position: relative;
+      display: inline-block;
+    }
+
+    .tagline {
+      font-size: 14px;
+      color: #7f8c8d;
+      margin-top: 4px;
+    }
+
+    .decorative-line {
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, #6b46c1, transparent);
+      margin-top: 2px;
+    }
+    
     </style>
 </head>
 <body>
     <header>
         <h1>Sam's Animation Practice</h1>
         <p>A collection of web animation (GSAP) experiments</p>
-        <p>Animated on mouseenter</p>
+        <p>Some animated on mouseenter</p>
     </header>
 
     <main class="grid-container">
@@ -234,6 +279,19 @@
                   </svg>         
                
             </div>
+        </div>
+        <div class="grid-item" id="day12">
+            <div class="animation-container">
+                <span class="day-number">Day 12 - Logo Animation</span>   
+                <div class="logo-container">
+                    <div class="logo-symbol">L</div>
+                    <div>
+                      <div class="logo-text">LOGO</div>
+                      <div class="decorative-line"></div>
+                      <div class="tagline">Your tagline here</div>
+                    </div>
+                  </div>
+                  
         </div>
     </main>
 
@@ -424,16 +482,20 @@ gsap.fromTo(day10Line,
     {opacity: 0, scale: .5,  },
     {opacity: 1, scale: 1,  duration: 1, stagger:.3, transformOrigin: "center center", ease: 'power2.inOut', repeat: -1, yoyo: true}
 );
+
+
     //   day eleven
     const circle = document.querySelector('.stroke-circle');
     const length = circle.getTotalLength();
+    const day11Container = document.querySelector('#day11')
+    const day11tl = gsap.timeline({paused: true})
     
-    gsap.set(circle, {
+    day11tl.set(circle, {
       strokeDasharray: length,
       strokeDashoffset: length
     });
 
-    gsap.to(circle, {
+    day11tl.to(circle, {
       strokeDashoffset: 0,
       duration: 2,
       ease: "power1.inOut",
@@ -441,6 +503,58 @@ gsap.fromTo(day10Line,
       yoyo: true
     });
 
+    day11Container.addEventListener('mouseenter', () => day11tl.play());
+    day11Container.addEventListener('mouseleave', () => day11tl.pause());
+
+    // day twelve
+
+    const logoSymbol = document.querySelector('.logo-symbol')
+    const decorativeLine = document.querySelector('.decorative-line')
+    const logoChars = splitText('.logo-text');
+    const taglineChars = splitText('.tagline');
+    const day12Container = document.querySelector('#day12')
+    const day12tl = gsap.timeline({paused: true})
+    
+    gsap.set(logoSymbol, {
+        opacity: 0, 
+        scale: 0
+    })
+    gsap.set(logoChars, {
+        y: 100,                    // Start 100px below
+        opacity: 0,                // Start transparent
+     
+    })
+    gsap.set(taglineChars, {
+        scaleX: 10,                    
+        opacity: 0,                
+     
+    })
+    gsap.set(decorativeLine, {
+        scaleX: 0                    
+      
+    })
+
+    day12tl.to(logoSymbol, 
+    
+    {opacity: 1, scale: 1, duration: .5,  ease: 'bounce'}
+
+).to(logoChars, {
+    y: 0,                    // Start 100px below
+    opacity: 1,                // Start transparent
+    duration: 0.5,             // Animation duration
+    stagger: 0.2,             // Delay between each character  
+    ease: "back.out(1.7)"      // Bouncy easing
+}).to(taglineChars, {
+    scaleX: 1,                    // Start 100px below
+    opacity: 1,                // Start transparent
+    duration: 0.5,             // Animation duration
+    stagger: 0.05,             // Delay between each character  
+    ease: "back.out(1.7)"      // Bouncy easing
+},"<").to(decorativeLine, 
+{scaleX: 1, duration: .5, transformOrigin: "0% 50%"}, "<0.3"
+)
+day12Container.addEventListener('mouseenter', () => day12tl.play());
+day12Container.addEventListener('mouseleave', () => day12tl.reverse());
     </script>
 </body>
 </html>
